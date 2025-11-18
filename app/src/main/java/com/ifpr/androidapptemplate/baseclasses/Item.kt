@@ -3,5 +3,8 @@ package com.ifpr.androidapptemplate.baseclasses
 data class Item(
     var endereco: String? = null,
     val base64Image: String? = null,
-    val imageUrl: String? = null
+    val imageUrl: String? = null,
+    var local: String? = null,
+    var iten: String? = null,
+    var numero: Int? = null
 )

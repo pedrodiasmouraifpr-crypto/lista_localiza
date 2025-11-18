@@ -1,5 +1,6 @@
 package com.ifpr.androidapptemplate.ui.dashboard
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -19,7 +20,6 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.StorageReference
 import com.ifpr.androidapptemplate.R
 import com.ifpr.androidapptemplate.baseclasses.Item
 import com.ifpr.androidapptemplate.databinding.FragmentDashboardBinding
@@ -33,6 +33,10 @@ class DashboardFragment : Fragment() {
     private lateinit var itemImageView: ImageView
     private var imageUri: Uri? = null
 
+
+    private lateinit var localEditText: EditText
+    private lateinit var itenEditText: EditText
+    private lateinit var numeroEditText: EditText
 
     //TODO("Declare aqui as outras variaveis do tipo EditText que foram inseridas no layout")
     private lateinit var salvarButton: Button
@@ -48,6 +52,7 @@ class DashboardFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -65,7 +70,12 @@ class DashboardFragment : Fragment() {
         itemImageView = view.findViewById(R.id.image_item)
         salvarButton = view.findViewById(R.id.salvarItemButton)
         selectImageButton = view.findViewById(R.id.button_select_image)
-        enderecoEditText = view.findViewById(R.id.enderecoItemEditText)
+        enderecoEditText = view.findViewById(R.id.mudei_de_burro)
+        localEditText = view.findViewById(R.id.txtLocal)
+        itenEditText = view.findViewById(R.id.txtCompra)
+        numeroEditText = view.findViewById(R.id.txteNumero)
+
+
         //TODO("Capture aqui os outro campos que foram inseridos no layout. Por exemplo, ate
         // o momento so foi capturado o endereco (EditText)")
 
@@ -96,13 +106,28 @@ class DashboardFragment : Fragment() {
 
     private fun salvarItem() {
         //TODO("Capture aqui o conteudo que esta nos outros editTexts que foram criados")
+
         val endereco = enderecoEditText.text.toString().trim()
+        val local = localEditText.text.toString().trim()
+        val iten = itenEditText.text.toString().trim()
+        val numero = numeroEditText.text.toString().trim()
 
         if (endereco.isEmpty() || imageUri == null) {
-            Toast.makeText(context, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT)
+            Toast.makeText(context, "Por favor, prencha este campo", Toast.LENGTH_SHORT)
                 .show()
             return
         }
+        if (local.isEmpty() || imageUri == null) {
+            Toast.makeText(context, "Por favor, prencha este campo", Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
+        if (iten.isEmpty() || imageUri == null) {
+            Toast.makeText(context, "Por favor, prencha este campo", Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
+
         uploadImageToFirestore()
     }
 
@@ -115,10 +140,13 @@ class DashboardFragment : Fragment() {
 
             if (bytes != null) {
                 val base64Image = Base64.encodeToString(bytes, Base64.DEFAULT)
+                val local = localEditText.text.toString().trim()
+                val iten = itenEditText.text.toString().trim()
+                val numero = numeroEditText.text.toString().toInt()
                 val endereco = enderecoEditText.text.toString().trim()
                 //TODO("Capture aqui o conteudo que esta nos outros editTexts que foram criados")
 
-                val item = Item(endereco, base64Image)
+                val item = Item(endereco, base64Image, null, local, iten, numero)
 
                 saveItemIntoDatabase(item)
             }

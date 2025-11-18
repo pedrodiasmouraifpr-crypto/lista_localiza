@@ -1,5 +1,6 @@
 package com.ifpr.androidapptemplate.ui.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -64,6 +65,7 @@ class HomeFragment : Fragment() {
         val databaseRef = FirebaseDatabase.getInstance().getReference("itens")
 
         databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            @SuppressLint("CutPasteId")
             override fun onDataChange(snapshot: DataSnapshot) {
                 container.removeAllViews()
 
@@ -76,8 +78,14 @@ class HomeFragment : Fragment() {
 
                         val imageView = itemView.findViewById<ImageView>(R.id.item_image)
                         val enderecoView = itemView.findViewById<TextView>(R.id.item_endereco)
+                        val localView = itemView.findViewById<TextView>(R.id.item_local)
+                        val itenView = itemView.findViewById<TextView>(R.id.item_iten)
+                        val numeroView = itemView.findViewById<TextView>(R.id.item_numero)
 
                         enderecoView.text = "Endereço: ${item.endereco ?: "Não informado"}"
+                        localView.text = "Local: ${item.local ?: "Não informado"}"
+                        itenView.text = "iten: ${item.iten ?: "Não informado"}"
+                        numeroView.text = "numero: ${item.numero ?: "Não informado"}"
 
                         if (!item.imageUrl.isNullOrEmpty()) {
                             Glide.with(container.context).load(item.imageUrl).into(imageView)

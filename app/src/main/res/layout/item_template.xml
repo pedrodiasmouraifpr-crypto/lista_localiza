@@ -32,6 +32,28 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/item_local"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="local:"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/item_iten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="iten:"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/item_numero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="numero:"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <!-- Campos futuros aqui -->
         </LinearLayout>
     </LinearLayout>
